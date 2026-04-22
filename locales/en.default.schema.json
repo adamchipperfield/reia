@@ -78,6 +78,12 @@
   "sections": {
     "main-password": {
       "settings": {
+        "overlay_image": {
+          "label": "Overlay image"
+        },
+        "logo_image": {
+          "label": "Logo image"
+        },
         "thumbnail_image": {
           "label": "Thumbnail image"
         }
