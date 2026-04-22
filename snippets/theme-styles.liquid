@@ -1,0 +1,139 @@
+{% capture chevron_down_icon %}{{ 'icon-chevron-down.svg' | inline_asset_content }}{% endcapture %}
+
+<style>
+  {{ settings.font_body | font_face: font_display: 'swap' }}
+  {{ settings.font_heading | font_face: font_display: 'swap' }}
+
+  {{ settings.font_body | font_modify: 'weight', '400' | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_modify: 'weight', '500' | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+
+  :root {
+    /**
+     * Font families.
+     */
+    --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+    --font-body-weight: {{ settings.font_body.weight }};
+    --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+    --font-heading-weight: {{ settings.font_heading.weight }};
+
+    /**
+     * Font weight.
+     */
+    --font-weight-thin: 100;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    /**
+     * Font size scale.
+     */
+    --font-size-12: 0.75rem;
+    --font-size-14: 0.875rem;
+    --font-size-16: 1rem;
+    --font-size-18: 1.125rem;
+    --font-size-20: 1.25rem;
+    --font-size-24: 1.5rem;
+    --font-size-28: 1.75rem;
+    --font-size-32: 2rem;
+    --font-size-36: 2.25rem;
+    --font-size-42: 2.625rem;
+    --font-size-48: 3rem;
+    --font-size-54: 3.375rem;
+    --font-size-60: 3.75rem;
+
+    /**
+     * Colors.
+     */
+    --color-background: {{ settings.color_background | color_to_rgb }};
+    --color-text: {{ settings.color_text | color_to_rgb }};
+    --color-text-light: {{ settings.color_text_light | color_to_rgb }};
+    --color-button-background: {{ settings.color_button_background | color_to_rgb }};
+    --color-button-hover-background: {{ settings.color_button_background | color_darken: 5 }};
+    --color-button-label: {{ settings.color_button_label | color_to_rgb }};
+    --color-border: {{ settings.color_border | color_to_rgb }};
+    --color-border-lighter: {{ settings.color_border | color_lighten: 8 | color_to_rgb }};
+    --color-success: {{ settings.color_success | color_to_rgb }};
+    --color-error: {{ settings.color_error | color_to_rgb }};
+    --color-backdrop: {{ settings.color_backdrop | color_to_rgb }};
+
+    /**
+     * Spacing scale.
+     */
+    --spacing-2: 0.125rem;
+    --spacing-4: 0.25rem;
+    --spacing-8: 0.5rem;
+    --spacing-12: 0.75rem;
+    --spacing-16: 1rem;
+    --spacing-24: 1.5rem;
+    --spacing-32: 2rem;
+    --spacing-40: 2.5rem;
+    --spacing-48: 3rem;
+    --spacing-64: 4rem;
+
+    /**
+     * Layout.
+     */
+    --container-gutter: var(--spacing-16);
+    --max-content-width: 1328px;
+    --header-height: 0;
+
+    @media (min-width: 768px) {
+      --container-gutter: var(--spacing-24);
+    }
+
+    /**
+     * Buttons.
+     */
+    --button-height: 50px;
+    --button-height-small: 40px;
+    --button-border-radius: 0;
+
+    /**
+     * Headings.
+     */
+    --font-size-h1-mobile: var(--font-size-48);
+    --font-size-h2-mobile: var(--font-size-32);
+    --font-size-h3-mobile: var(--font-size-28);
+    --font-size-h4-mobile: var(--font-size-24);
+    --font-size-h5-mobile: var(--font-size-20);
+    --font-size-h6-mobile: var(--font-size-16);
+
+    --font-size-h1-desktop: var(--font-size-60);
+    --font-size-h2-desktop: var(--font-size-42);
+    --font-size-h3-desktop: var(--font-size-36);
+    --font-size-h4-desktop: var(--font-size-32);
+    --font-size-h5-desktop: var(--font-size-28);
+    --font-size-h6-desktop: var(--font-size-20);
+
+    --heading-margin: var(--spacing-12);
+
+    /**
+     * Icons.
+     */
+    --chevron-down-icon: url({{ chevron_down_icon | base64_encode | prepend: 'data:image/svg+xml;base64,' | json }});
+  }
+
+  {% if request.page_type == 'captcha' %}
+    .shopify-challenge__container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-16);
+      padding-block: var(--spacing-64);
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-8);
+      }
+    }
+  {% endif %}
+</style>
+
+{{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+{{ 'layout.css' | asset_url | stylesheet_tag: preload: true }}
+
+{% if request.page_type contains 'customers' %}
+  {{ 'account.css' | asset_url | stylesheet_tag: preload: true }}
+{% endif %}

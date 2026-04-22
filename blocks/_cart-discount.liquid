@@ -1,0 +1,113 @@
+{% assign discount_code_applications = cart.discount_applications | where: 'type', 'discount_code' %}
+
+<script
+  src="{{ 'cart-discount.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<cart-discount applied-codes="{{ discount_code_applications | map: 'title' | join: ', ' }}">
+  <details
+    class="cart-discount__disclosure disclosure-reset"
+    {% unless discount_code_applications.size == 0 %}
+      open
+    {% endunless %}
+  >
+    <summary class="flex flex-gap-small items-center justify-between width-full text-body-medium">
+      {{ 'cart.discount' | t }}
+
+      {{ 'icon-plus.svg' | inline_asset_content }}
+      {{ 'icon-minus.svg' | inline_asset_content }}
+    </summary>
+
+    <form class="cart-discount__form flex flex-col flex-gap-medium" data-ref="cart-discount.form">
+      <div class="flex flex-gap-small items-end">
+        <div class="flex-1">
+          <label class="visually-hidden" for="{{ block.id }}-discount">{{ 'cart.discount' | t }}</label>
+
+          <input
+            id="{{ block.id }}-discount"
+            class="input-small"
+            name="discount"
+            type="text"
+            required
+          >
+        </div>
+
+        <button class="button button--small" data-ref="cart-discount.submit">{{ 'cart.apply_discount' | t }}</button>
+      </div>
+
+      <p class="text-body-small error hidden" data-ref="cart-discount.error">{{ 'cart.discount_error' | t }}</p>
+
+      {% unless discount_code_applications.size == 0 %}
+        <ul class="cart-discount__discounts list-reset flex flex-wrap flex-gap-small">
+          {% for discount_application in discount_code_applications %}
+            <li class="cart-discount__discount flex flex-gap-small items-center">
+              <p>{{ discount_application.title }}</p>
+
+              <button
+                class="cart-discount__remove flex button-reset"
+                type="button"
+                data-ref="cart-discount.remove"
+                data-discount="{{ discount_application.title }}"
+                title="{{ 'cart.remove_discount' | t: discount: discount_application.title }}"
+              >
+                {{ 'icon-cancel.svg' | inline_asset_content }}
+              </button>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endunless %}
+    </form>
+  </details>
+</cart-discount>
+
+{% stylesheet %}
+  .cart-discount {
+    &:not(:last-child) {
+      border-block-end: 1px solid var(--color-border);
+      margin-block-end: var(--spacing-8);
+      padding-block-end: var(--spacing-16);
+    }
+  }
+
+  .cart-discount__remove {
+    .icon {
+      --size: 16px;
+      pointer-events: none;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  .cart-discount__discount {
+    background-color: var(--color-border-lighter);
+    border-radius: 8px;
+    color: var(--color-text-light);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-medium);
+    padding-block: var(--spacing-4);
+    padding-inline: var(--spacing-8);
+  }
+
+  .cart-discount__disclosure[open] {
+    .cart-discount__form {
+      margin-block-start: var(--spacing-12);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:theme_blocks._cart-discount.name",
+  "class": "cart-discount",
+  "presets": [
+    {
+      "name": "t:theme_blocks._cart-discount.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,17 @@
+{
+  "Custom element ref": {
+    "scope": "html,liquid",
+    "prefix": ["data-ref"],
+    "body": ["data-ref=\"${1:custom-element}.${2:ref}\""],
+  },
+  "Section name": {
+    "scope": "html,liquid",
+    "prefix": ["data-section"],
+    "body": ["data-section=\"${1:section-id}\""],
+  },
+  "Section element": {
+    "scope": "html,liquid",
+    "prefix": ["data-section-element"],
+    "body": ["data-section-element=\"${1:section-element}\""],
+  },
+}

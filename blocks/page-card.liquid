@@ -1,0 +1,61 @@
+{% doc %}
+  @description
+  Renders a page summary.
+
+  @param {string} [badges] - Comma separated list of badges.
+
+  @example
+  {% content_for 'block', type: 'article-card', id: 'article', closest.article: article %}
+{% enddoc %}
+
+{% liquid
+  assign page = block.settings.page
+  assign badge_list = badges | split: ', '
+%}
+
+<a
+  class="flex flex-col flex-gap-medium"
+  href="{{ page.url }}"
+  {% if request.visual_preview_mode %}
+    style="width: 300px;"
+  {% endif %}
+>
+  {% unless badge_list.size == 0 %}
+    <ul class="image-container__badges flex flex-gap-small list-reset">
+      {% for badge in badge_list %}
+        <li class="badge">{{ badge }}</li>
+      {% endfor %}
+    </ul>
+  {% endunless %}
+
+  <p>{{ page.title | default: 'Page title' }}</p>
+
+  {% if page.content or request.visual_preview_mode %}
+    <p class="text-body-small">
+      {{
+        page.content
+        | default: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse bibendum metus porta, suscipit eros sit amet, auctor justo. Proin aliquet justo at consequat gravida.</p>'
+        | strip_html
+        | truncatewords: 15
+      }}
+    </p>
+  {% endif %}
+</a>
+
+{% schema %}
+{
+  "name": "t:theme_blocks.page-card.name",
+  "settings": [
+    {
+      "type": "page",
+      "id": "page",
+      "label": "t:presets.settings.page.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:theme_blocks.page-card.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,145 @@
+{
+  "LiquidDoc": {
+    "scope": "liquid",
+    "prefix": ["doc"],
+    "body": [
+      "{% doc %}",
+      "\t@description",
+      "\t${1:Snippet description}",
+      "",
+      "\t@param {${3|string,number,boolean,object|}} ${2:variable_name}${4}",
+      "",
+      "\t@example\n\t{% render '${TM_FILENAME_BASE}' %}",
+      "{% enddoc %}",
+    ],
+  },
+
+  "LiquidDoc param": {
+    "scope": "liquid",
+    "prefix": ["doc-param", "@param"],
+    "body": ["@param {${2|string,number,boolean,object|}} ${1:variable_name}"],
+  },
+
+  "Icon": {
+    "scope": "liquid",
+    "prefix": ["icon"],
+    "body": ["{{ 'icon-${1}.svg' | inline_asset_content }}"],
+  },
+
+  "Component stylesheet": {
+    "scope": "liquid",
+    "prefix": ["stylesheet-component"],
+    "body": ["{% stylesheet %}", "\t${1}", "{% endstylesheet %}"],
+  },
+
+  "Liquid stylesheet": {
+    "scope": "liquid",
+    "prefix": ["stylesheet-liquid"],
+    "body": ["{% style %}", "\t${1}", "{% endstyle %}"],
+  },
+
+  "JavaScript asset": {
+    "scope": "liquid",
+    "prefix": ["javascript-asset", "script-asset"],
+    "body": [
+      "<script",
+      "\tsrc=\"{{ '${1}' | asset_url }}\"",
+      "\ttype=\"module\"",
+      "\tfetchpriority=\"low\"",
+      "></script>",
+    ],
+  },
+
+  "JavaScript tag": {
+    "scope": "liquid",
+    "prefix": ["javascript-tag", "script-tag"],
+    "body": ["<script type=\"module\">", "\t${1}", "</script>"],
+  },
+
+  "Schema tag with settings and presets": {
+    "scope": "liquid",
+    "prefix": ["schema"],
+    "body": [
+      "{% schema %}",
+      "{",
+      "\t\"name\": \"${1}\",",
+      "\t\"settings\": [${2}],",
+      "\t\"presets\": [",
+      "\t\t{",
+      "\t\t\t\"name\": \"${1}\"",
+      "\t\t}",
+      "\t]",
+      "}",
+      "{% endschema %}\n",
+    ],
+  },
+
+  "Renders a text setting element": {
+    "scope": "liquid",
+    "prefix": ["text-setting"],
+    "body": [
+      "{% unless ${1:variable} == empty %}",
+      "\t<${2:p} class=\"${3:class}\">{{ ${1:variable} }}</${2:p}>",
+      "{% endunless %}",
+    ],
+  },
+
+  "Renders responsive media settings": {
+    "scope": "liquid",
+    "prefix": ["media-settings"],
+    "body": [
+      "{",
+      "\t\"type\": \"image_picker\",",
+      "\t\"id\": \"image\",",
+      "\t\"label\": \"t:presets.settings.default_image.label\",",
+      "},",
+      "{",
+      "\t\"type\": \"image_picker\",",
+      "\t\"id\": \"large_image\",",
+      "\t\"label\": \"t:presets.settings.desktop_image.label\",",
+      "},",
+      "{",
+      "\t\"type\": \"video\",",
+      "\t\"id\": \"video\",",
+      "\t\"label\": \"t:presets.settings.default_video.label\",",
+      "\t\"info\": \"t:presets.settings.video.info\",",
+      "},",
+      "{",
+      "\t\"type\": \"video\",",
+      "\t\"id\": \"large_video\",",
+      "\t\"label\": \"t:presets.settings.desktop_video.label\",",
+      "\t\"info\": \"t:presets.settings.video.info\",",
+      "}",
+    ],
+  },
+
+  "Media snippet": {
+    "scope": "liquid",
+    "prefix": ["media"],
+    "body": [
+      "{% render 'media',",
+      "\timage: section.settings.image,",
+      "\tlarge_image: section.settings.large_image,",
+      "\timage_width: ${1:image_width},",
+      "\tvideo: section.settings.video,",
+      "\tlarge_video: section.settings.large_video",
+      "\tvideo_autoplay: ${2:true},",
+      "\tvideo_loop: ${3:true},",
+      "\tvideo_muted: ${4:true},",
+      "\tvideo_playsinline: ${5:true}",
+      "%}",
+    ],
+  },
+
+  "Image snippet": {
+    "scope": "liquid",
+    "prefix": ["image"],
+    "body": ["{% render 'image', image: ${1:image}, width: ${2:width} %}"],
+  },
+
+  "Video snippet": {
+    "scope": "liquid",
+    "prefix": ["video"],
+    "body": ["{% render 'video', video: ${1:video} %}"],
+  },
+}

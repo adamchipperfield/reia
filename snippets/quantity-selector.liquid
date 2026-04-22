@@ -1,0 +1,134 @@
+{% doc %}
+  @description
+  Renders a quantity field with controls.
+
+  @param {string} id - Unique identifier for the input.
+  @param {number} [value] - The default quantity value, defaults to 1.
+  @param {number} [max] - The maximum quantity available.
+  @param {string} [container_class] - Class applied to the container element.
+  @param {string} [input_ref] - Ref applied to the input element.
+  @param {string} [name] - The input name, defaults to `quantity`.
+  @param {boolean} [hide_label] - Visually hides the label.
+  @param {boolean} [small]
+
+  @example
+  {% render 'quantity-selector' %}
+{% enddoc %}
+
+{% assign value = value | default: 1 %}
+
+<script
+  src="{{ 'quantity-selector.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<div
+  {% if container_class %}
+    class="{{ container_class }}"
+  {% endif %}
+>
+  <label
+    {% if hide_label %}
+      class="visually-hidden"
+    {% endif %}
+    for="{{ id }}"
+  >
+    {{- 'quantity.title' | t -}}
+  </label>
+
+  <quantity-selector class="quantity-selector {% if small %}quantity-selector--small{% endif %} flex items-center">
+    <button
+      class="quantity-selector__button button-reset"
+      type="button"
+      data-ref="quantity-selector.decrease"
+      title="{{ 'quantity.decrease' | t }}"
+      {% if value and value <= 1 %}
+        disabled
+      {% endif %}
+    >
+      {{ 'icon-minus.svg' | inline_asset_content }}
+    </button>
+
+    <input
+      id="{{ id }}"
+      class="quantity-selector__input flex-1"
+      type="number"
+      {% if max %}
+        max="{{ max }}"
+      {% endif %}
+      min="1"
+      name="{{ name | default: 'quantity' }}"
+      value="{{ value }}"
+      readonly
+      {% if input_ref %}
+        data-ref="{{ input_ref }}"
+      {% endif %}
+    >
+
+    <button
+      class="quantity-selector__button button-reset"
+      type="button"
+      data-ref="quantity-selector.increase"
+      title="{{ 'quantity.increase' | t }}"
+      {% if max and value >= max %}
+        disabled
+      {% endif %}
+    >
+      {{ 'icon-plus.svg' | inline_asset_content }}
+    </button>
+  </quantity-selector>
+</div>
+
+{% stylesheet %}
+  .quantity-selector {
+    border: 1px solid var(--color-border);
+    padding-block: var(--spacing-8);
+    padding-inline: var(--spacing-12);
+
+    &.quantity-selector--small {
+      .quantity-selector__input {
+        font-size: var(--font-size-12);
+      }
+
+      .quantity-selector__button {
+        .icon {
+          --size: 12px;
+        }
+      }
+    }
+  }
+
+  .quantity-selector__input {
+    appearance: textfield;
+    -moz-appearance: textfield;
+    border: 0;
+    font-size: var(--font-size-14);
+    padding: 0;
+    text-align: center;
+    width: 3ch;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .quantity-selector__button {
+    display: flex;
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .icon {
+      --size: 16px;
+    }
+  }
+{% endstylesheet %}

@@ -1,0 +1,53 @@
+{% doc %}
+  @description
+  Renders a responsive video element.
+
+  @param {video} video - The default video.
+  @param {video} [large_video] - The large breakpoint video.
+  @param {string} [class] - Container class.
+  @param {boolean} [lazy] - Lazy loads the video, defaults to `true`.
+  @param {boolean} [autoplay]
+  @param {boolean} [loop]
+  @param {boolean} [muted]
+  @param {boolean} [playsinline]
+
+  @example
+  {% render 'video' %}
+{% enddoc %}
+
+<script
+  src="{{ 'video-element.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{% capture video_tag %}
+  {{
+    video | default: large_video
+    | video_tag:
+      class: class,
+      autoplay: autoplay,
+      loop: loop,
+      muted: muted,
+      playsinline: playsinline,
+      data-ref: 'video-element.video'
+  }}
+{% endcapture %}
+
+<video-element
+  {% if large_video %}
+    {% for source in large_video.sources %}
+      large-{{ source.mime_type | handleize }}="{{ source.url }}"
+    {% endfor %}
+
+    {% if large_video.preview_image %}
+      large-poster="{{ large_video.preview_image | image_url }}"
+    {% endif %}
+  {% endif %}
+>
+  {% if lazy or lazy == null %}
+    {{ video_tag | replace: 'src', 'data-src' | replace: 'poster', 'data-poster' }}
+  {% else %}
+    {{ video_tag }}
+  {% endif %}
+</video-element>

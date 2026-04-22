@@ -1,0 +1,71 @@
+{% doc %}
+  A responsive, multi-media element.
+
+  @param {image} [image]
+  @param {image} [large_image]
+  @param {video} [video]
+  @param {video} [large_video]
+  @param {number} [image_width]
+  @param {boolean} [image_preload]
+  @param {string} [image_loading]
+  @param {string} [image_fetchpriority]
+  @param {string} [image_inline_styles]
+  @param {boolean} [video_autoplay]
+  @param {boolean} [video_loop]
+  @param {boolean} [video_muted]
+  @param {boolean} [video_playsinline]
+  @param {boolean} [video_lazy]
+  @param {string} [class]
+{% enddoc %}
+
+{% if image or large_image %}
+  {% unless video and large_image == null %}
+    {% liquid
+      assign image_class = class
+
+      if video
+        assign image_class = image_class | append: ' from-large' | strip
+      endif
+
+      if large_video
+        assign image_class = image_class | append: ' until-large' | strip
+      endif
+    %}
+
+    {% render 'image',
+      image: image,
+      large_image: large_image,
+      width: image_width,
+      preload: image_preload,
+      loading: image_loading,
+      fetchpriority: image_fetchpriority,
+      inline_styles: image_inline_styles,
+      class: image_class
+    %}
+  {% endunless %}
+{% endif %}
+
+{% if video or large_video %}
+  {% liquid
+    assign video_class = class
+
+    if video == null
+      assign video_class = video_class | append: ' from-large' | strip
+    endif
+
+    if large_video == null and large_image
+      assign video_class = video_class | append: ' until-large' | strip
+    endif
+  %}
+
+  {% render 'video',
+    video: video,
+    large_video: large_video,
+    autoplay: video_autoplay,
+    loop: video_loop,
+    muted: video_muted,
+    playsinline: video_playsinline,
+    lazy: video_lazy,
+    class: video_class
+  %}
+{% endif %}

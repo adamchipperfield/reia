@@ -1,0 +1,40 @@
+<a
+  class="flex flex-col flex-gap-medium"
+  href="{{ block.settings.collection.url }}"
+  {% if request.visual_preview_mode %}
+    style="width: 300px;"
+  {% endif %}
+>
+  <div class="image-container image-square">
+    {% if block.settings.collection.featured_image %}
+      {% render 'image',
+        image: block.settings.collection.featured_image,
+        width: 592,
+        class: 'image image-cover width-full height-full'
+      %}
+    {% endif %}
+  </div>
+
+  <p>{{ block.settings.collection.title | default: 'Collection title' }}</p>
+</a>
+
+{% schema %}
+{
+  "name": "t:theme_blocks.collection-card.name",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:presets.settings.collection.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:theme_blocks.collection-card.name",
+      "settings": {
+        "collection": "{{ closest.collection }}"
+      }
+    }
+  ]
+}
+{% endschema %}

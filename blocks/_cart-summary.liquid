@@ -1,0 +1,82 @@
+{% doc %}
+  @param {boolean} [show_cart_button]
+{% enddoc %}
+
+<div class="flex flex-col flex-gap-small">
+  <div class="flex flex-gap-small justify-between">
+    <p class="text-weight-medium">{{ 'cart.subtotal' | t }}</p>
+    <p class="text-right">{{ cart.total_price | money }}</p>
+  </div>
+
+  {% if cart.cart_level_discount_applications.size > 0 %}
+    <ul class="list-reset text-right">
+      {% for discount in cart.cart_level_discount_applications %}
+        <li>
+          {{ 'icon-discount.svg' | inline_asset_content }}
+          <small>{{ discount.title }} (-{{ discount.total_allocated_amount | money }})</small>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+
+{% if cart.taxes_included %}
+  <p class="text-meta">{{ 'price.taxes_included' | t }}</p>
+{% endif %}
+
+{% if block.settings.show_cart_note %}
+  <script
+    src="{{ 'cart-note.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+
+  <cart-note class="form-group">
+    <div class="form-field">
+      <label for="{{ block.id }}-cart-note">{{ 'cart.note' | t }}</label>
+
+      <textarea id="{{ block.id }}-cart-note" name="note" data-ref="cart-note.input">
+        {{- cart.note -}}
+      </textarea>
+    </div>
+  </cart-note>
+{% endif %}
+
+<div class="flex flex-col flex-gap-small">
+  {% if show_cart_button %}
+    {{ 'cart.cart_button' | t | link_to: routes.cart_url, class: 'button button--secondary' }}
+  {% endif %}
+
+  {% form 'cart', cart %}
+    <button class="button width-full" name="checkout">{{ 'cart.checkout_button' | t }}</button>
+  {% endform %}
+
+  {% if additional_checkout_buttons %}
+    <div class="additional-checkout-buttons--vertical">{{ content_for_additional_checkout_buttons }}</div>
+  {% endif %}
+
+  {% if block.settings.show_payment_logos %}
+    {% render 'payment-logos' %}
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "t:theme_blocks._cart-summary.name",
+  "class": "flex flex-col flex-gap-medium",
+  "tag": "aside",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_cart_note",
+      "label": "t:theme_blocks._cart-summary.settings.show_cart_note.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_logos",
+      "label": "t:theme_blocks._cart-summary.settings.show_payment_logos.label",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
