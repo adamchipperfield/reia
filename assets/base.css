@@ -651,7 +651,7 @@
   .rte {
     p {
       &:not(:last-child) {
-        margin-block-end: var(--spacing-24);
+        margin-block-end: var(--paragraph-spacing, var(--spacing-24));
       }
 
       &:empty {
@@ -678,8 +678,8 @@
 
     ul,
     ol {
-      margin-block: var(--spacing-24);
-      padding-inline-start: var(--spacing-24);
+      margin-block: var(--list-spacing, var(--spacing-24));
+      padding-inline-start: var(--list-spacing, var(--spacing-24));
     }
   }
 }

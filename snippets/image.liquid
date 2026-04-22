@@ -7,6 +7,7 @@
   @param {string} [height] - The default image height.
   @param {string} [size] - The default image display size.
   @param {string} [class] - Optional class applied to the image element.
+  @param {string} [container_class]
   @param {boolean} [preload] - Enables image preloading.
   @param {string} [loading] - Defines the loading strategy.
   @param {string} [fetchpriority] - Defines the fetch priority.
@@ -49,6 +50,16 @@
       assign loading = 'eager'
       assign fetchpriority = 'high'
       assign preload = true
+    endif
+  endunless
+
+  if small_image or medium_image or large_image or xlarge_image
+    assign is_responsive = true
+  endif
+
+  unless is_responsive
+    if container_class
+      assign class = class | append: ' ' | append: container_class
     endif
   endunless
 %}
@@ -96,8 +107,12 @@
   {% endif %}
 {% endcapture %}
 
-{% if small_image or medium_image or large_image or xlarge_image %}
-  <picture>
+{% if is_responsive %}
+  <picture
+    {% if container_class %}
+      class="{{ container_class }}"
+    {% endif %}
+  >
     {% if small_image %}
       {% assign widths = small_widths | default: small_image.width | split: ', ' %}
 

@@ -16,19 +16,20 @@
   @param {boolean} [video_playsinline]
   @param {boolean} [video_lazy]
   @param {string} [class]
+  @param {string} [container_class]
 {% enddoc %}
 
 {% if image or large_image %}
   {% unless video and large_image == null %}
     {% liquid
-      assign image_class = class
+      assign image_container_class = container_class
 
       if video
-        assign image_class = image_class | append: ' from-large' | strip
+        assign image_container_class = image_container_class | append: ' from-large' | strip
       endif
 
       if large_video
-        assign image_class = image_class | append: ' until-large' | strip
+        assign image_container_class = image_container_class | append: ' until-large' | strip
       endif
     %}
 
@@ -40,14 +41,15 @@
       loading: image_loading,
       fetchpriority: image_fetchpriority,
       inline_styles: image_inline_styles,
-      class: image_class
+      class: class,
+      container_class: container_class
     %}
   {% endunless %}
 {% endif %}
 
 {% if video or large_video %}
   {% liquid
-    assign video_class = class
+    assign video_class = container_class | append: ' ' | append: class
 
     if video == null
       assign video_class = video_class | append: ' from-large' | strip

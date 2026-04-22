@@ -76,6 +76,13 @@
     }
   },
   "sections": {
+    "main-password": {
+      "settings": {
+        "thumbnail_image": {
+          "label": "Thumbnail image"
+        }
+      }
+    },
     "cart-drawer": {
       "name": "Cart drawer"
     },
