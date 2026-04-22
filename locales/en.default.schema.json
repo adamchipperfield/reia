@@ -32,17 +32,6 @@
         }
       }
     },
-    "typography": {
-      "name": "Typography",
-      "settings": {
-        "font_body": {
-          "label": "Body font"
-        },
-        "font_heading": {
-          "label": "Heading font"
-        }
-      }
-    },
     "favicon": {
       "name": "Favicon",
       "settings": {

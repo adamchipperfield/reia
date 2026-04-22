@@ -67,23 +67,6 @@
     ]
   },
   {
-    "name": "t:settings_schema.typography.name",
-    "settings": [
-      {
-        "type": "font_picker",
-        "id": "font_body",
-        "label": "t:settings_schema.typography.settings.font_body.label",
-        "default": "inter_n4"
-      },
-      {
-        "type": "font_picker",
-        "id": "font_heading",
-        "label": "t:settings_schema.typography.settings.font_heading.label",
-        "default": "inter_n6"
-      }
-    ]
-  },
-  {
     "name": "t:settings_schema.favicon.name",
     "settings": [
       {

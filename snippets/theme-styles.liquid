@@ -1,21 +1,36 @@
 {% capture chevron_down_icon %}{{ 'icon-chevron-down.svg' | inline_asset_content }}{% endcapture %}
 
 <style>
-  {{ settings.font_body | font_face: font_display: 'swap' }}
-  {{ settings.font_heading | font_face: font_display: 'swap' }}
+  @font-face {
+    font-family: 'Exposure [-10]';
+    font-display: swap;
+    font-weight: 400;
+    src: url('{{ '205TF-Exposure-[-10].otf' | asset_url }}') format('opentype');
+  }
 
-  {{ settings.font_body | font_modify: 'weight', '400' | font_face: font_display: 'swap' }}
-  {{ settings.font_body | font_modify: 'weight', '500' | font_face: font_display: 'swap' }}
-  {{ settings.font_body | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+  @font-face {
+    font-family: 'Exposure [-10]';
+    font-display: swap;
+    font-weight: 400;
+    font-style: italic;
+    src: url('{{ '205TF-Exposure-[-10]Italic.otf' }}') format('opentype');
+  }
+
+  @font-face {
+    font-family: 'Season Sans';
+    font-display: swap;
+    font-weight: 500;
+    src: url('{{ 'SeasonSans-Medium.woff2' | asset_url }}') format('woff2'), url('{{ 'SeasonSans-Medium.woff' | asset_url }}') format('woff');
+  }
 
   :root {
     /**
      * Font families.
      */
-    --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
-    --font-body-weight: {{ settings.font_body.weight }};
-    --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
-    --font-heading-weight: {{ settings.font_heading.weight }};
+    --font-body: 'Season Sans', 'Inter', 'DM Sans', system-ui, sans-serif;
+    --font-body-weight: 400;
+    --font-heading: 'Exposure [-10]', 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+    --font-heading-weight: 500;
 
     /**
      * Font weight.
