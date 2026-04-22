@@ -86,6 +86,9 @@
         },
         "thumbnail_image": {
           "label": "Thumbnail image"
+        },
+        "footer_heading": {
+          "label": "Footer heading"
         }
       }
     },

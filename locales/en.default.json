@@ -26,7 +26,7 @@
     "language": "Language",
     "zip": "Postal/ZIP code",
     "phone": "Phone number",
-    "email": "Email",
+    "email": "Email address",
     "password": "Password",
     "confirm_password": "Confirm password",
     "message": "Message",
