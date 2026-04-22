@@ -28,6 +28,7 @@
     "phone": "Phone number",
     "email": "Email address",
     "password": "Password",
+    "enter_password": "Enter password",
     "confirm_password": "Confirm password",
     "message": "Message",
     "submit": "Submit"
